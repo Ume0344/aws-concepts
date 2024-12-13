@@ -3,7 +3,7 @@
 - This way, we donot require NAT and internet gateway to access a specific aws service.
 
 #### VPC Endpoint Service
-- To make a service available in a region, endpoint service is created. For example, my microservice is running on eks cluster. To make is available in eu-west-1 region to be used by service consumers, we have to create endpoint service for my microservice.
+- To make a service available in a region, endpoint service is created. For example, my microservice is running on eks cluster. To make it available in eu-west-1 region to be used by service consumers, we have to create endpoint service for my microservice.
 - To create a endpoint service, a load balancer is required which routes the traffic from consumer to your service.
 
 ![alt text](image.png)
@@ -23,3 +23,9 @@
 
 #### Target Group
 - A logical grouping of resources that we want to route to through a load balancer.
+
+#### Network Vs Gateway LoadBalancers (NLB vs GLB)
+NLB - Distributes traffic based on network conditions. It monitors the health of all the targets (for nats, it is the nats pods running on k8s) in a registered target group and only sends requests to healthy targets. It then opens a TCP connection to the selected target on the port specified in listener configuration.
+GLB - Can deploy, manage and scale virtual appliances (firewalls, applications running on ec2 instances). Here, routing rules are established using route tables.
+
+NLB is used when applications uses layer 4 protocols (TCP, UDP, TLS). GLB supports IP-based protocols. (Mostly used for virtual network functions like firewalls)
